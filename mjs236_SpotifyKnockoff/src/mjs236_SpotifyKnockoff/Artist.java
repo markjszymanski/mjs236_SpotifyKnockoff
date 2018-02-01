@@ -57,7 +57,6 @@ public class Artist {
 				this.lastName = rs.getString("last_name");
 				this.bandName = rs.getString("band_name");
 				this.bio = rs.getString("bio");
-				System.out.println("Band from database: " + this.bandName);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -68,9 +67,16 @@ public class Artist {
 		String sql = "DELETE FROM artist WHERE artist_id = '" + artistID + "';";
 		DbUtilities db = new DbUtilities();
 		db.executeQuery(sql);
-		System.out.println("Artist deleted from database.");
 	}
 
+	public String getArtistID() {
+		return artistID;
+	}
+
+	public void setArtistID(String artistID) {
+		this.artistID = artistID;
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}

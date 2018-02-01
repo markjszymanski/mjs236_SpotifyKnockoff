@@ -19,6 +19,14 @@ public class Album {
 	private double length;
 	Hashtable<Song, String> albumSongs;
 	
+	/**
+	 * @param title
+	 * @param releaseDate
+	 * @param recordingCompany
+	 * @param numberOfTracks
+	 * @param pmrcRating
+	 * @param length
+	 */
 	public Album(String title, String releaseDate, String recordingCompany, int numberOfTracks, String pmrcRating, double length) {
 		this.albumID = UUID.randomUUID().toString();
 		this.title = title;
@@ -56,6 +64,17 @@ public class Album {
 		}
 	}
 	
+	public String getAlbumID() {
+		return albumID;
+	}
+
+	public void setAlbumID(String albumID) {
+		this.albumID = albumID;
+	}
+
+	/**
+	 * @param albumID
+	 */
 	public Album(String albumID) {
 		String sql = "SELECT * FROM album WHERE album_id = '" + albumID + "';";
 		DbUtilities db = new DbUtilities();
@@ -70,87 +89,139 @@ public class Album {
 				this.numberOfTracks = rs.getInt("number_of_tracks");
 				this.pmrcRating = rs.getString("PMRC_rating");
 				this.length = rs.getDouble("length");
-				System.out.println("Album title from database: " + this.title);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * @param albumID
+	 */
 	public void deleteAlbum(String albumID) {
 		String sql = "DELETE FROM album WHERE album_id = '" + albumID + "';";
 		DbUtilities db = new DbUtilities();
 		db.executeQuery(sql);
-		System.out.println("Album deleted from database.");
 	}
 
+	/**
+	 * @param song
+	 */
 	public void addSong(Song song) {
 		albumSongs.put(song, this.albumID);
 		System.out.println("Added song to " + this.title);
 	}
 	
+	/**
+	 * @param songID
+	 */
 	public void deleteSong(String songID) {
 		Song song = new Song(songID);
 		albumSongs.remove(song);
 		System.out.println("Deleted song from " + this.title);
 	}
 
+	/**
+	 * @return
+	 */
 	public String getTitle() {
 		return title;
 	}
 
+	/**
+	 * @param title
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getReleaseDate() {
 		return releaseDate;
 	}
 
+	/**
+	 * @param releaseDate
+	 */
 	public void setReleaseDate(String releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getCoverImagePath() {
 		return coverImagePath;
 	}
 
+	/**
+	 * @param coverImagePath
+	 */
 	public void setCoverImagePath(String coverImagePath) {
 		this.coverImagePath = coverImagePath;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getRecordingCompany() {
 		return recordingCompany;
 	}
 
+	/**
+	 * @param recordingCompany
+	 */
 	public void setRecordingCompany(String recordingCompany) {
 		this.recordingCompany = recordingCompany;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getNumberOfTracks() {
 		return numberOfTracks;
 	}
 
+	/**
+	 * @param numberOfTracks
+	 */
 	public void setNumberOfTracks(int numberOfTracks) {
 		this.numberOfTracks = numberOfTracks;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getPmrcRating() {
 		return pmrcRating;
 	}
 
+	/**
+	 * @param pmrcRating
+	 */
 	public void setPmrcRating(String pmrcRating) {
 		this.pmrcRating = pmrcRating;
 	}
 
+	/**
+	 * @return
+	 */
 	public double getLength() {
 		return length;
 	}
 
+	/**
+	 * @param length
+	 */
 	public void setLength(double length) {
 		this.length = length;
 	}
 
+	/**
+	 * @param song
+	 */
 	public void deleteSong(Song song) {
 		albumSongs.remove(song);
 		System.out.println("Deleted song from " + this.title);

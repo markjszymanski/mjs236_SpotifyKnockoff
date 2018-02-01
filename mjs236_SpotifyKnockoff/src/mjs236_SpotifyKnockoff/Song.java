@@ -11,20 +11,19 @@ public class Song {
 	private String filePath;
 	private String releaseDate;
 	private String recordDate;
-	private String albumID;
-	Hashtable<Artist, String> songArtists;
+	Map<String, Artist> songArtists;
 	
-	public Song(String title, double length, String releaseDate, String recordDate, String albumID) {
+	public Song(String title, double length, String releaseDate, String recordDate) {
 		this.title = title;
 		this.length = length;
 		this.releaseDate = releaseDate;
 		this.recordDate = recordDate;
 		this.songID = UUID.randomUUID().toString();
-		this.albumID = albumID;
-		//Hashtable<String, Artist> songArtists = new Hashtable<String, Artist>();
 		
-		String sql = "INSERT INTO song (song_id,title,length,file_path,release_date,record_date,fk_album_id) ";
-		sql += "VALUES (?, ?, ?, ?, ?, ?, ?);";
+		songArtists = new Hashtable<String, Artist>();
+		
+		String sql = "INSERT INTO song (song_id,title,length,file_path,release_date,record_date) ";
+		sql += "VALUES (?, ?, ?, ?, ?, ?);";
 		
 		System.out.println("New song added to database");
 		
@@ -33,12 +32,11 @@ public class Song {
 			Connection conn = db.getConn();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, this.songID);
-			ps.setString(2,  this.title);
+			ps.setString(2, this.title);
 			ps.setDouble(3, this.length);
 			ps.setString(4, "");
 			ps.setString(5, this.releaseDate);
 			ps.setString(6, this.recordDate);
-			ps.setString(7, this.albumID);
 			ps.executeUpdate();
 			db.closeDbConnection();
 			db = null;
@@ -49,6 +47,7 @@ public class Song {
 	}
 	
 	public Song(String songID){
+		songArtists = new Hashtable<String, Artist>();
 		String sql = "SELECT * FROM song WHERE song_id = '" + songID + "';";
 		DbUtilities db = new DbUtilities();
 		try {
@@ -59,25 +58,33 @@ public class Song {
 				this.releaseDate = rs.getDate("release_date").toString();
 				this.recordDate = rs.getDate("record_date").toString();
 				this.length = rs.getDouble("length");
-				this.albumID = rs.getString("fk_album_id");
-				System.out.println("Song title from database: " + this.title);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-				
+		}	
 	}
 	
 	public void deleteSong(String songID) {
 		String sql = "DELETE FROM song WHERE song_id = '" + songID + "';";
 		DbUtilities db = new DbUtilities();
 		db.executeQuery(sql);
-		System.out.println("Song deleted from database.");
 	}
 
 	public void addArtist(Artist artist) {
-		songArtists.put(artist, this.songID);
-		System.out.println("Added artist to " + this.title);
+		songArtists.put(artist.getArtistID(), artist);
+		String sql = "INSERT INTO song_artist (fk_song_id,fk_artist_id) VALUES (?, ?);";
+		
+		try {
+			DbUtilities db = new DbUtilities();
+			Connection conn = db.getConn();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, this.songID);
+			ps.setString(2,  artist.getArtistID());
+			ps.executeUpdate();
+			System.out.println("Added artist to " + this.title);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void deleteArtist(String artistID) {
@@ -119,11 +126,7 @@ public class Song {
 		return recordDate;
 	}
 
-	public String getAlbumID() {
-		return albumID;
-	}
-
-	public Hashtable<Artist, String> getSongArtists() {
+	public Map<String, Artist> getSongArtists() {
 		return songArtists;
 	}
 }
