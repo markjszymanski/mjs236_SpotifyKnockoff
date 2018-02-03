@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.UUID;
 
+
 public class Artist {
 
 	private String artistID;
@@ -16,6 +17,12 @@ public class Artist {
 	private String bio;
 	Hashtable<String, Artist> songArtists;
 	
+	/**
+	 * @param firstName
+	 * @param lastName
+	 * @param bandName
+	 * @param bio
+	 */
 	public Artist(String firstName, String lastName, String bandName, String bio) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -25,8 +32,6 @@ public class Artist {
 		
 		String sql = "INSERT INTO artist (artist_id,first_name,last_name,band_name,bio) ";
 		sql += "VALUES (?, ?, ?, ?, ?);";
-		
-		System.out.println("New artist added to database");
 		
 		try {
 			DbUtilities db = new DbUtilities();
@@ -46,6 +51,9 @@ public class Artist {
 		}
 	}
 	
+	/**
+	 * @param artistID
+	 */
 	public Artist(String artistID) {
 		String sql = "SELECT * FROM artist WHERE artist_id = '" + artistID + "';";
 		DbUtilities db = new DbUtilities();
@@ -63,49 +71,97 @@ public class Artist {
 		}
 	}
 	
+	/**
+	 * @param artistID
+	 */
 	public void deleteArtist(String artistID) {
 		String sql = "DELETE FROM artist WHERE artist_id = '" + artistID + "';";
 		DbUtilities db = new DbUtilities();
 		db.executeQuery(sql);
 	}
 
+	/**
+	 * @return
+	 */
 	public String getArtistID() {
 		return artistID;
 	}
 
+	/**
+	 * @param artistID
+	 */
 	public void setArtistID(String artistID) {
+		String sql = "UPDATE artist SET artist_id = '" + artistID + "' WHERE artist_id = '" + this.artistID + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
 		this.artistID = artistID;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
+	/**
+	 * @param firstName
+	 */
 	public void setFirstName(String firstName) {
+		String sql = "UPDATE artist SET first_name = '" + firstName + "' WHERE first_name = '" + this.firstName + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
 		this.firstName = firstName;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getLastName() {
 		return lastName;
 	}
 
+	/**
+	 * @param lastName
+	 */
 	public void setLastName(String lastName) {
+		String sql = "UPDATE artist SET last_name = '" + lastName + "' WHERE last_name = '" + this.lastName + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
 		this.lastName = lastName;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getBandName() {
 		return bandName;
 	}
 
+	/**
+	 * @param bandName
+	 */
 	public void setBandName(String bandName) {
+		String sql = "UPDATE artist SET band_name = '" + bandName + "' WHERE band_name = '" + this.bandName + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
 		this.bandName = bandName;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getBio() {
 		return bio;
 	}
 
+	/**
+	 * @param bio
+	 */
 	public void setBio(String bio) {
+		String sql = "UPDATE artist SET bio = '" + bio + "' WHERE bio = '" + this.bio + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
 		this.bio = bio;
 	}
 }

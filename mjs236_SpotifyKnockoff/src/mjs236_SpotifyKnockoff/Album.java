@@ -1,11 +1,7 @@
 package mjs236_SpotifyKnockoff;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Hashtable;
-import java.util.UUID;
+import java.sql.*;
+import java.util.*;
 
 public class Album {
 	
@@ -17,7 +13,7 @@ public class Album {
 	private int numberOfTracks;
 	private String pmrcRating;
 	private double length;
-	Hashtable<Song, String> albumSongs;
+	Map<String, Song> albumSongs;
 	
 	/**
 	 * @param title
@@ -37,11 +33,10 @@ public class Album {
 		this.pmrcRating = pmrcRating;
 		this.length = length;
 		
+		albumSongs = new Hashtable<String, Song>();
 		
 		String sql = "INSERT INTO album (album_id,title,release_date,cover_image_path,recording_company_name,number_of_tracks,PMRC_rating,length) ";
 		sql += "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-		
-		System.out.println("New album added to database");
 		
 		try {
 			DbUtilities db = new DbUtilities();
@@ -63,19 +58,12 @@ public class Album {
 			e.printStackTrace();
 		}
 	}
-	
-	public String getAlbumID() {
-		return albumID;
-	}
-
-	public void setAlbumID(String albumID) {
-		this.albumID = albumID;
-	}
 
 	/**
 	 * @param albumID
 	 */
 	public Album(String albumID) {
+		albumSongs = new Hashtable<String, Song>();
 		String sql = "SELECT * FROM album WHERE album_id = '" + albumID + "';";
 		DbUtilities db = new DbUtilities();
 		try {
@@ -91,7 +79,8 @@ public class Album {
 				this.length = rs.getDouble("length");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			ErrorLogger logger = new ErrorLogger();
+			logger.log(e.getMessage());
 		}
 	}
 	
@@ -108,19 +97,48 @@ public class Album {
 	 * @param song
 	 */
 	public void addSong(Song song) {
-		albumSongs.put(song, this.albumID);
-		System.out.println("Added song to " + this.title);
+		albumSongs.put(song.getSongID(), song);
+		String sql = "INSERT INTO album_song (fk_album_id,fk_song_id) VALUES (?, ?);";
+		
+		try {
+			DbUtilities db = new DbUtilities();
+			Connection conn = db.getConn();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, this.albumID);
+			ps.setString(2, song.getSongID());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
 	 * @param songID
 	 */
 	public void deleteSong(String songID) {
-		Song song = new Song(songID);
-		albumSongs.remove(song);
-		System.out.println("Deleted song from " + this.title);
+		albumSongs.remove(songID);
+		String sql = "DELETE FROM album_song WHERE fk_song_id = '" + songID + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
 	}
 
+	/**
+	 * @return
+	 */
+	public String getAlbumID() {
+		return albumID;
+	}
+
+	/**
+	 * @param albumID
+	 */
+	public void setAlbumID(String albumID) {
+		String sql = "UPDATE album SET album_id = '" + albumID + "' WHERE album_id = '" + this.albumID + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
+		this.albumID = albumID;
+	}
+	
 	/**
 	 * @return
 	 */
@@ -132,6 +150,9 @@ public class Album {
 	 * @param title
 	 */
 	public void setTitle(String title) {
+		String sql = "UPDATE album SET title = '" + title + "' WHERE title = '" + this.title + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
 		this.title = title;
 	}
 
@@ -146,6 +167,9 @@ public class Album {
 	 * @param releaseDate
 	 */
 	public void setReleaseDate(String releaseDate) {
+		String sql = "UPDATE album SET release_date = '" + releaseDate + "' WHERE release_date = '" + this.releaseDate + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
 		this.releaseDate = releaseDate;
 	}
 
@@ -160,6 +184,9 @@ public class Album {
 	 * @param coverImagePath
 	 */
 	public void setCoverImagePath(String coverImagePath) {
+		String sql = "UPDATE album SET cover_image_path = '" + coverImagePath + "' WHERE cover_image_path = '" + this.coverImagePath + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
 		this.coverImagePath = coverImagePath;
 	}
 
@@ -174,6 +201,9 @@ public class Album {
 	 * @param recordingCompany
 	 */
 	public void setRecordingCompany(String recordingCompany) {
+		String sql = "UPDATE album SET recording_company_name = '" + recordingCompany + "' WHERE recording_company_name = '" + this.recordingCompany + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
 		this.recordingCompany = recordingCompany;
 	}
 
@@ -188,6 +218,9 @@ public class Album {
 	 * @param numberOfTracks
 	 */
 	public void setNumberOfTracks(int numberOfTracks) {
+		String sql = "UPDATE album SET number_of_tracks = '" + numberOfTracks + "' WHERE number_of_tracks = '" + this.numberOfTracks + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
 		this.numberOfTracks = numberOfTracks;
 	}
 
@@ -202,6 +235,9 @@ public class Album {
 	 * @param pmrcRating
 	 */
 	public void setPmrcRating(String pmrcRating) {
+		String sql = "UPDATE album SET PMRC_rating = '" + pmrcRating + "' WHERE PMRC_rating = '" + this.pmrcRating + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
 		this.pmrcRating = pmrcRating;
 	}
 
@@ -216,14 +252,23 @@ public class Album {
 	 * @param length
 	 */
 	public void setLength(double length) {
+		String sql = "UPDATE album SET length = '" + length + "' WHERE length = '" + this.length + "';";
+		DbUtilities db = new DbUtilities();
+		db.executeQuery(sql);
 		this.length = length;
+	}
+	
+	/**
+	 * @return
+	 */
+	public Map<String, Song> getAlbumSongs() {
+		return albumSongs;
 	}
 
 	/**
-	 * @param song
+	 * @param albumSongs
 	 */
-	public void deleteSong(Song song) {
-		albumSongs.remove(song);
-		System.out.println("Deleted song from " + this.title);
+	public void setAlbumSongs(Map<String, Song> albumSongs) {
+		this.albumSongs = albumSongs;
 	}
 }
