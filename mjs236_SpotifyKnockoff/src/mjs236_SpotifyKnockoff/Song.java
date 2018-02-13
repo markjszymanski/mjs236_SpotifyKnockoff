@@ -50,6 +50,17 @@ public class Song {
 		}		
 	}
 	
+	public Song(String songID, String title, double length, String releaseDate, String recordDate){
+		
+		this.title = title;
+		this.length = length;
+		this.releaseDate = releaseDate;
+		this.recordDate = recordDate;
+		this.songID = songID;
+		
+		songArtists = new Hashtable<String, Artist>();
+	}
+	
 	/**
 	 * @param songID
 	 */
@@ -185,6 +196,17 @@ public class Song {
 		DbUtilities db = new DbUtilities();
 		db.executeQuery(sql);
 		this.filePath = filePath;
+	}
+	
+	Vector<String> getSongRecord(){
+		Vector<String> songRecord = new Vector<>();
+		songRecord.add(this.songID);
+		songRecord.add(this.title);
+		songRecord.add(this.filePath);
+		songRecord.add(String.valueOf(this.length));
+		songRecord.add(this.releaseDate);
+		songRecord.add(this.recordDate);
+		return songRecord;
 	}
 
 	/**

@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"mjs236_SpotifyKnockoff","c":"SpotifyGUI","l":"getFrame()"},{"p":"mjs236_SpotifyKnockoff","c":"SpotifyGUI","l":"main(String[])","url":"main-java.lang.String:A-"},{"p":"mjs236_SpotifyKnockoff","c":"SpotifyGUI","l":"SpotifyGUI()"}]
