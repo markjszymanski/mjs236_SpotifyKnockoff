@@ -1,1 +1,1 @@
-typeSearchIndex = [{"p":"mjs236_SpotifyKnockoff","l":"SpotifyGUI"}]
+typeSearchIndex = [{"p":"mjs236_SpotifyKnockoff","l":"SongController"}]
