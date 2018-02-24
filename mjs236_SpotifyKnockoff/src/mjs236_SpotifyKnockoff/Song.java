@@ -3,15 +3,44 @@ package mjs236_SpotifyKnockoff;
 import java.sql.*;
 import java.util.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table (name = "song")
 public class Song {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	
+	@Column (name = "song_id")
 	private String songID;
+	
+	@Column (name = "title")
 	private String title;
+	
+	@Column (name = "length")
 	private double length;
+	
+	@Column (name = "file_path")
 	private String filePath;
+	
+	@Column (name = "release_date")
 	private String releaseDate;
+	
+	@Column (name = "record_date")
 	private String recordDate;
+	
+	@Transient
 	Map<String, Artist> songArtists;
+	
+	public Song() {
+		super();
+	}
 	
 	/**
 	 * @param title
@@ -28,26 +57,26 @@ public class Song {
 		
 		songArtists = new Hashtable<String, Artist>();
 		
-		String sql = "INSERT INTO song (song_id,title,length,file_path,release_date,record_date) ";
-		sql += "VALUES (?, ?, ?, ?, ?, ?);";
-		
-		try {
-			DbUtilities db = new DbUtilities();
-			Connection conn = db.getConn();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, this.songID);
-			ps.setString(2, this.title);
-			ps.setDouble(3, this.length);
-			ps.setString(4, "");
-			ps.setString(5, this.releaseDate);
-			ps.setString(6, this.recordDate);
-			ps.executeUpdate();
-			db.closeDbConnection();
-			db = null;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+//		String sql = "INSERT INTO song (song_id,title,length,file_path,release_date,record_date) ";
+//		sql += "VALUES (?, ?, ?, ?, ?, ?);";
+//		
+//		try {
+//			DbUtilities db = new DbUtilities();
+//			Connection conn = db.getConn();
+//			PreparedStatement ps = conn.prepareStatement(sql);
+//			ps.setString(1, this.songID);
+//			ps.setString(2, this.title);
+//			ps.setDouble(3, this.length);
+//			ps.setString(4, "");
+//			ps.setString(5, this.releaseDate);
+//			ps.setString(6, this.recordDate);
+//			ps.executeUpdate();
+//			db.closeDbConnection();
+//			db = null;
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}		
 	}
 	
 	public Song(String songID, String title, double length, String releaseDate, String recordDate){

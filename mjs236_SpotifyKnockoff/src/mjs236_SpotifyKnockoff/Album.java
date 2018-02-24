@@ -3,17 +3,50 @@ package mjs236_SpotifyKnockoff;
 import java.sql.*;
 import java.util.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table (name = "album")
 public class Album {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	
+	@Column (name = "album_id")
 	private String albumID;
+	
+	@Column (name = "title")
 	private String title;
+	
+	@Column (name = "release_date")
 	private String releaseDate;
+	
+	@Column (name = "cover_image_path")
 	private String coverImagePath;
+	
+	@Column (name = "recording_company_name")
 	private String recordingCompany;
+	
+	@Column (name = "number_of_tracks")
 	private int numberOfTracks;
+	
+	@Column (name = "PMRC_rating")
 	private String pmrcRating;
+	
+	@Column (name = "length")
 	private double length;
+	
+	@Transient
 	Map<String, Song> albumSongs;
+	
+	public Album() {
+		super();
+	}
 	
 	/**
 	 * @param title
