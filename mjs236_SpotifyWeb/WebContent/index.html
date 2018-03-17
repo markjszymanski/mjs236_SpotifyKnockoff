@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Spotify Knockoff</title>
+        
+        <!--CSS-->
+        <link rel="stylesheet" type="text/css" href="main.css">
+        
+        <!--JS-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
+        <script>
+        $(document).ready(function(){
+            $(".songsbtn").click(function(){
+                $(".songTable").show();
+                $(".artistTable").hide();
+                $(".albumTable").hide();
+            });
+            $(".artistsbtn").click(function(){
+                $(".songTable").hide();
+                $(".artistTable").show();
+                $(".albumTable").hide();
+            });
+            $(".albumsbtn").click(function(){
+                $(".songTable").hide();
+                $(".artistTable").hide();
+                $(".albumTable").show();
+            });
+        });
+        </script>
+        
+	</head>
+	<body>
+        <section class="page">
+            <nav>
+                <h1>Spotify Knockoff</h1>
+                <form method="get" action="">
+                    <input type="text" placeholder="Search">
+                    <input type="submit" name="search" value="Search">
+                </form>
+                <ul>
+                    <li><button class="songsbtn">Songs</button></li>
+                    <li><button class="artistsbtn">Artists</button></li>
+                    <li><button class="albumsbtn">Albums</button></li>
+                </ul>
+            </nav>
+
+            <main>
+                <table class="songTable">
+                    <tr>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Artist
+                        </th>
+                        <th>
+                            Length
+                        </th>
+                        <th>
+                            Release Date
+                        </th>
+                        <th>
+                            Record Date
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            Stairway to Heaven
+                        </td>
+                        <td>
+                            Led Zeppelin
+                        </td>
+                        <td>
+                            5:02
+                        </td>
+                        <td>
+                            02/10/1960
+                        </td>
+                        <td>
+                            02/09/1960
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Everyday
+                        </td>
+                        <td>
+                            Logic
+                        </td>
+                        <td>
+                            3:32
+                        </td>
+                        <td>
+                            02/28/2017
+                        </td>
+                        <td>
+                            02/14/2017
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            White Iverson
+                        </td>
+                        <td>
+                            Post Malone
+                        </td>
+                        <td>
+                            4:32
+                        </td>
+                        <td>
+                            04/28/2015
+                        </td>
+                        <td>
+                            01/14/2013
+                        </td>
+                    </tr>
+                </table>
+                <table class="artistTable">
+                    <tr>
+                        <th>
+                            First Name
+                        </th>
+                        <th>
+                            Last Name
+                        </th>
+                        <th>
+                            Band Name
+                        </th>
+                        <th>
+                            Bio
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            Bob
+                        </td>
+                        <td>
+                            Jones
+                        </td>
+                        <td>
+                            School Yard Boyz
+                        </td>
+                        <td>
+                            We in the streetz.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Marshall
+                        </td>
+                        <td>
+                            Mathers
+                        </td>
+                        <td>
+                            Eminem
+                        </td>
+                        <td>
+                            There's vomit on his sweater already.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Aston
+                        </td>
+                        <td>
+                            Post
+                        </td>
+                        <td>
+                            Post Malone
+                        </td>
+                        <td>
+                            Stoney Balony
+                        </td>
+                    </tr>
+                </table>
+                <table class="albumTable">
+                    <tr>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Artist
+                        </th>
+                        <th>
+                            Number of Tracks
+                        </th>
+                        <th>
+                            Release Date
+                        </th>
+                        <th>
+                            Record Date
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            Under Pressure
+                        </td>
+                        <td>
+                            Logic
+                        </td>
+                        <td>
+                            10
+                        </td>
+                        <td>
+                            02/10/1960
+                        </td>
+                        <td>
+                            02/09/1960
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Professional Rapper
+                        </td>
+                        <td>
+                            Lil Dicky
+                        </td>
+                        <td>
+                            20
+                        </td>
+                        <td>
+                            02/28/2017
+                        </td>
+                        <td>
+                            02/14/2017
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            American Idiot
+                        </td>
+                        <td>
+                            Green Day
+                        </td>
+                        <td>
+                            17
+                        </td>
+                        <td>
+                            04/28/2015
+                        </td>
+                        <td>
+                            01/14/2013
+                        </td>
+                    </tr>
+                </table>
+            </main>
+            <footer>
+                
+            </footer>
+        </section>
+	</body>
+</html>

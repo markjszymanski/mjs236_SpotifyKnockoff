@@ -1,0 +1,111 @@
+@charset "ISO-8859-1";
+
+body {
+    font-family: 'Roboto', sans-serif;
+	margin: 0;
+    overflow: hidden;
+}
+
+.page {
+    display: flex;
+}
+
+nav {
+	background-color: darkgrey;
+    padding: 15px;
+    width: 25%;
+}
+
+nav input:hover {
+    
+}
+
+nav ul {
+	list-style-type: none;
+}
+
+nav li {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+nav li:hover{
+    border-right: 3px solid white;
+}
+
+
+nav a {
+    color: white;
+	text-decoration: none;
+}
+
+nav a:hover {
+    color: black;
+}
+
+main {
+    align-items: center;
+    background-color: limegreen;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    text-align: left;
+    width: 75%;
+}
+
+table {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    width: 90%;
+}
+
+table tr {
+    padding-bottom: 10px;
+}
+
+table th {
+    padding-bottom: 10px;
+    text-align: left;
+    width: 100px;
+}
+
+table td {
+    padding-bottom: 10px;
+    width: 50px;
+}
+
+/*
+.songTable {
+    
+}
+
+.songTable th {
+    color: black;
+}
+
+.songTable td {
+    padding: 10px;
+}
+
+.artistTable th {
+    color: black;
+}
+
+.artistTable td {
+    padding: 10px;
+}
+
+.albumTable th {
+    color: black;
+}
+
+.albumTable td {
+    
+}
+*/
+
+footer {
+    display: block;
+}
