@@ -32,24 +32,49 @@
 	            
 	            
 	            
-	            $("#songsbtn").click(function(){
+	            $("#songsbtn").click(function(){            	
 	                $("#songTable").show();
 	                $("#artistTable").hide();
 	                $("#albumTable").hide();
+	                displayData();
 	            });
 	            $("#artistsbtn").click(function(){
 	                $("#songTable").hide();
 	                $("#artistTable").show();
 	                $("#albumTable").hide();
+	                displayData();
 	            });
 	            $("#albumsbtn").click(function(){
 	                $("#songTable").hide();
 	                $("#artistTable").hide();
 	                $("#albumTable").show();
+	                displayData();
 	            });
-	            
 			});
 
+            function displayData(){
+            	$.get("api/get_songs?searchTerm=",function(data){
+            		console.log(data);
+            		songSearchResults(data);
+            	})
+            }
+            
+			function songSearchResults(data){
+				console.log(data.songs);	
+				ko.applyBindings(data);
+			}
+
+			function songList(){
+				self = this;
+			}
+
+			function albumList(){
+				self = this;
+			}
+
+			function artistList(){
+				self = this;
+			}
         </script>
         
 	</head>
