@@ -12,6 +12,9 @@
         
         <script>
         $(document).ready(function(){
+            var song = document.createElement('audio');            
+            song.setAttribute('src', 'music/Everyday.mp3');
+            
             $(".songsbtn").click(function(){
                 $(".songTable").show();
                 $(".artistTable").hide();
@@ -27,7 +30,32 @@
                 $(".artistTable").hide();
                 $(".albumTable").show();
             });
+            $(".playbtn").click(function(){
+                song.play();
+            });
+            $(".pausebtn").click(function(){
+                song.pause();
+            });
+            $(".restartbtn").click(function(){
+                song.currentTime = 0;
+                song.play();
+            });
+        	$("#btnSearch").click(function(){
+        		var searchTerm = $("#txtSearch").val();
+        		//var searchBy = $("#cboSearchBy").val();
+        		
+        		search("title", searchTerm);
+        	});
         });
+
+        function search(key, val){
+        	var searchUrl = "api/get_songs?" + key + "=" + val;
+        	// console.log(searchUrl);
+        	$.get(searchUrl, function(data){
+        		console.log(data);
+        		//songSearchResults(data);
+        	});
+        }
         </script>
         
 	</head>
@@ -36,14 +64,18 @@
             <nav>
                 <h1>Spotify Knockoff</h1>
                 <form method="get" action="">
-                    <input type="text" placeholder="Search">
-                    <input type="submit" name="search" value="Search">
+                    <input type="text" id="txtSearch" placeholder="Search">
+                    <input type="submit" id="btnSearch" name="search" value="Search">
                 </form>
                 <ul>
                     <li><button class="songsbtn">Songs</button></li>
                     <li><button class="artistsbtn">Artists</button></li>
                     <li><button class="albumsbtn">Albums</button></li>
                 </ul>
+                <br><br>
+                <p><button class="playbtn">Play</button>
+                <button class="pausebtn">Pause</button>
+                <button class="restartbtn">Restart</button></p>
             </nav>
 
             <main>
@@ -246,9 +278,6 @@
                     </tr>
                 </table>
             </main>
-            <footer>
-                
-            </footer>
         </section>
 	</body>
 </html>
