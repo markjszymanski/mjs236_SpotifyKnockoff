@@ -17,9 +17,9 @@ import org.json.JSONObject;
 import edu.pitt.spotify.utils.DbUtilities;
 
 /**
- * Servlet implementation class get_songs
+ * Servlet implementation class get_artists
  */
-@WebServlet("/api/get_songs")
+@WebServlet("/api/get_artists")
 public class get_artists extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,25 +36,26 @@ public class get_artists extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
-		// Title
-		// Artist
+		// First Name
+		// Last Name
+		// Band Name
+		// Song
 		// Album
-		// Year
 		String title = "", artist = "", album = "", songYear = "";
 		String sql = "";
 		if(request.getParameter("title") != null){
 			title = request.getParameter("title");
 			if(!title.equals("")){
-				sql = "SELECT * FROM song WHERE title LIKE '%" + title + "%';";
+				sql = "SELECT * FROM song WHERE title LIKE '" + title + "%';";
 			}
 		}
 		else if(request.getParameter("artist") != null){
 			artist = request.getParameter("artist");
 			if(! artist.equals("")){
 				sql = "SELECT * FROM song JOIN song_artist ON song_id = fk_song_id JOIN artist ON fk_artist_id = artist_id ";
-				sql += "WHERE artist.band_name LIKE '%" + artist + "%' ";
-				sql += "OR artist.first_name LIKE '%" + artist + "%' ";
-				sql += "OR artist.last_name LIKE '%" + artist + "%'; ";
+				sql += "WHERE artist.band_name LIKE '" + artist + "%' ";
+				sql += "OR artist.first_name LIKE '" + artist + "%' ";
+				sql += "OR artist.last_name LIKE '" + artist + "%'; ";
 			}
 		}
 		else if(request.getParameter("songYear")!=null){
@@ -67,30 +68,30 @@ public class get_artists extends HttpServlet {
 			album = request.getParameter("album");
 			if(!album.equals("")){
 				sql = "SELECT * FROM song JOIN album_song ON song_id = fk_song_id ";
-				sql += "JOIN album ON fk_album_id = album_id WHERE album.title LIKE '%" + album + "%';";
+				sql += "JOIN album ON fk_album_id = album_id WHERE album.title LIKE '" + album + "%';";
 			}
 		}
 		
 		if(sql.equals("")){
-			sql = "SELECT * FROM song;";
+			sql = "SELECT * FROM artist;";
 		}
 		// response.getWriter().write(sql);
 		
-		JSONArray songList = new JSONArray();
+		JSONArray artistList = new JSONArray();
 		
 		try {
 			DbUtilities db = new DbUtilities();
 			ResultSet rs = db.getResultSet(sql);
 			while(rs.next()){
-				JSONObject song = new JSONObject();
-				song.put("song_id", rs.getString("song_id"));
-				song.put("title", rs.getString("title"));
-				song.put("release_date", rs.getString("release_date"));
-				song.put("record_date", rs.getString("record_date"));
-				song.put("length", rs.getInt("length"));
-				songList.put(song);
+				JSONObject artist = new JSONObject();
+				artist.put("song_id", rs.getString("song_id"));
+				artist.put("title", rs.getString("title"));
+				artist.put("release_date", rs.getString("release_date"));
+				artist.put("record_date", rs.getString("record_date"));
+				artist.put("length", rs.getInt("length"));
+				artistList.put(artist);
 			}
-			response.getWriter().write(songList.toString());
+			response.getWriter().write(artistList.toString());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

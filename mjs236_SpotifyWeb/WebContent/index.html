@@ -9,6 +9,7 @@
         
         <!--JS-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
         
         <script>
         $(document).ready(function(){
@@ -54,8 +55,42 @@
         	$.get(searchUrl, function(data){
         		console.log(data);
         		//songSearchResults(data);
+        		var viewModel = {};
+        		viewModel.songData = data;
+        		songSearchResults(viewModel);
         	});
         }
+        
+        function songSearchResults(viewModel){
+        	console.log(viewModel.songData);	
+        	ko.applyBindings(viewModel);
+        }
+        
+        var searchResult = null;
+        $(document).ready(function(){
+        	
+        	
+        	$("#txtSearch").keyup(function(){
+        		var searchTerm = $("#txtSearch").val();
+        		if(searchTerm.length >= 3){
+        			console.log(searchTerm);
+        			search(searchTerm);
+        		}
+        		
+        		
+        	});
+        });
+
+        function search(searchTerm){
+        	var searchUrl = "api/search_songs?searchTerm=" + searchTerm;
+        	// console.log(searchUrl);
+        	$.get(searchUrl, function(data){
+        		console.log(data);
+        		
+        	});
+        }
+        
+        
         </script>
         
 	</head>
