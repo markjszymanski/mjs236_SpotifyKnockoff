@@ -26,18 +26,21 @@
 	                $("#songTable").show();
 	                $("#artistTable").hide();
 	                $("#albumTable").hide();
+	                $("#welcome-message").hide();
 	                displaySongData();
 	            });
 	            $("#artistsbtn").click(function(){
 	                $("#songTable").hide();
 	                $("#artistTable").show();
 	                $("#albumTable").hide();
+                    $("#welcome-message").hide();
 	                displayArtistData();
 	            });
 	            $("#albumsbtn").click(function(){
 	                $("#songTable").hide();
 	                $("#artistTable").hide();
 	                $("#albumTable").show();
+                    $("#welcome-message").hide();
 	                displayAlbumData();
 	            });
 			});
@@ -89,7 +92,7 @@
 	<body>
         <section class="page">
             <nav>
-                <h1>Spotify Knockoff</h1>
+                <h1>SpotifyKnockoff</h1>
                 <form method="get" action="/api/get_artists">
                     <hr>
                     <input type="text" id="txtSearch" placeholder="Search">
@@ -105,6 +108,11 @@
             </nav>
 
             <main>
+            	<div id="welcome-message">
+                    <h1>Welcome to SpotifyKnockoff.</h1>            
+                    <h3>Click Songs, Artists, or Albums to browse our entire collection or search for something specific.</h3>
+                </div>
+                
 				<table id="songTable" border="1" cellspacing="0" cellpadding="4">
 					<thead>
 						<tr>
