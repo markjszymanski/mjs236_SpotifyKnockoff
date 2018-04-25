@@ -40,19 +40,30 @@ public class get_songs extends HttpServlet {
 		// Artist
 		// Album
 		// Year
-		String title = "", artist = "", album = "", songYear = "", searchTerm = "";
+		//String title = "", artist = "", album = "", songYear = "", searchTerm = "";
+		String searchTerm = request.getParameter("searchTerm");
 		String sql = "";
 		
-		/*if(request.getParameter("searchTerm") != ""){
-			searchTerm = request.getParameter("searchTerm");
-			if(!searchTerm.equals("")){
-				sql = "SELECT * FROM song WHERE title LIKE '%" + searchTerm + "%';";
-			}
-		}*/
+		if (searchTerm == null) {
+			sql = "SELECT * FROM song;";
+		}
+		else {
+			sql = "SELECT * FROM song WHERE title LIKE '%" + searchTerm + "%';";
+		}
+		
+		System.out.println(sql);
+		
+/*		if(request.getParameter(searchTerm) != ""){
+			System.out.println(searchTerm);
+			
+			sql = "SELECT * FROM song WHERE title LIKE '%" + searchTerm + "%';";
+			System.out.println(sql);
+		}
+		
 		
 		if(sql.equals("")){
 			sql = "SELECT * FROM song;";
-		}
+		}*/
 		
 		/*if(request.getParameter("title") != null){
 			title = request.getParameter("title");

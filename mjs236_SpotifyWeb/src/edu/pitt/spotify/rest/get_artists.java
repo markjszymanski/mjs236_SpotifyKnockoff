@@ -41,8 +41,19 @@ public class get_artists extends HttpServlet {
 		// Band Name
 		// Song
 		// Album
-		String firstName = "", lastName = "", bandName = "", bio = "";
+		String searchTerm = request.getParameter("searchTerm");
 		String sql = "";
+		
+		if (searchTerm == null) {
+			sql = "SELECT * FROM artist;";
+		}
+		else {
+			sql = "SELECT * FROM artist WHERE first_name LIKE '%" + searchTerm + "%'";
+			sql += " OR last_name LIKE '%" + searchTerm + "%'";
+			sql += " OR band_name LIKE '%" + searchTerm + "%';";
+		}
+		
+		System.out.println(sql);
 		/*if(request.getParameter("title") != null){
 			title = request.getParameter("title");
 			if(!title.equals("")){
@@ -71,10 +82,10 @@ public class get_artists extends HttpServlet {
 				sql += "JOIN album ON fk_album_id = album_id WHERE album.title LIKE '" + album + "%';";
 			}
 		}*/
-		
+		/*
 		if(sql.equals("")){
 			sql = "SELECT * FROM artist;";
-		}
+		}*/
 		// response.getWriter().write(sql);
 		
 		JSONArray artistList = new JSONArray();

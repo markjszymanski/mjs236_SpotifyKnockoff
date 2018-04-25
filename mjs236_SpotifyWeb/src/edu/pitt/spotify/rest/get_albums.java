@@ -40,8 +40,22 @@ public class get_albums extends HttpServlet {
 		// Artist
 		// Song
 		// Year
-		String album_id = "", title = "", release_date = "", recording_company_name = "", number_of_tracks = "", PMRC_rating = "", length = "";
+		//String album_id = "", title = "", release_date = "", recording_company_name = "", number_of_tracks = "", PMRC_rating = "", length = "";
+		//String sql = "";
+		
+		String searchTerm = request.getParameter("searchTerm");
 		String sql = "";
+		
+		if (searchTerm == null) {
+			sql = "SELECT * FROM album;";
+		}
+		else {
+			sql = "SELECT * FROM album WHERE title LIKE '%" + searchTerm + "%'";
+		}
+		
+		System.out.println(sql);
+		
+		
 		/*if(request.getParameter("title") != null){
 			title = request.getParameter("title");
 			if(!title.equals("")){
@@ -71,9 +85,9 @@ public class get_albums extends HttpServlet {
 			}
 		}
 		*/
-		if(sql.equals("")){
+		/*if(sql.equals("")){
 			sql = "SELECT * FROM album;";
-		}
+		}*/
 		// response.getWriter().write(sql);
 		
 		JSONArray albumList = new JSONArray();
