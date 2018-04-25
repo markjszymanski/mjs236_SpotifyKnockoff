@@ -109,6 +109,11 @@ table {
     width: 90%;
 }
 
+.title {
+	text-align: center;
+}
+
+
 table tr {
     padding-bottom: 10px;
 }

@@ -27,26 +27,26 @@
 	                $("#artistTable").hide();
 	                $("#albumTable").hide();
 	                $("#welcome-message").hide();
-	                displaySongData();
+	                displaySongData("");
 	            });
 	            $("#artistsbtn").click(function(){
 	                $("#songTable").hide();
 	                $("#artistTable").show();
 	                $("#albumTable").hide();
                     $("#welcome-message").hide();
-	                displayArtistData();
+	                displayArtistData("");
 	            });
 	            $("#albumsbtn").click(function(){
 	                $("#songTable").hide();
 	                $("#artistTable").hide();
 	                $("#albumTable").show();
                     $("#welcome-message").hide();
-	                displayAlbumData();
+	                displayAlbumData("");
 	            });
 			});
 
-			function displaySongData(){
-				$.get("api/get_songs?serchTerm=",function(data){
+			function displaySongData(searchTerm){
+				$.get("api/get_songs?serchTerm=" + searchTerm,function(data){
             		console.log(data);
             		var viewModel = {};
             		viewModel.songData = data;
@@ -55,8 +55,8 @@
 				})
 			}
 
-			function displayArtistData(){
-				$.get("api/get_artists?serchTerm=",function(data){
+			function displayArtistData(searchTerm){
+				$.get("api/get_artists?serchTerm=" + searchTerm,function(data){
             		console.log(data);
             		var viewModel = {};
             		viewModel.artistData = data;
@@ -65,8 +65,8 @@
 				})
 			}
 			
-			function displayAlbumData(){
-				$.get("api/get_albums?serchTerm=",function(data){
+			function displayAlbumData(searchTerm){
+				$.get("api/get_albums?serchTerm=" + searchTerm,function(data){
             		console.log(data);
             		var viewModel = {};
             		viewModel.albumData = data;
@@ -75,17 +75,16 @@
 				})
 			}
 
-			/*function songList(){
-				self = this;
+			function search(searchTerm) {
+				console.log(searchTerm);
+				$("#welcome-message").hide();
+				$("#songTable").show();
+		        $("#artistTable").show();
+		        $("#albumTable").show();
+				displaySongData(searchTerm);
+				
 			}
-
-			function albumList(){
-				self = this;
-			}
-
-			function artistList(){
-				self = this;
-			}*/
+			
         </script>
         
 	</head>
@@ -93,7 +92,7 @@
         <section class="page">
             <nav>
                 <h1>SpotifyKnockoff</h1>
-                <form method="get" action="/api/get_artists">
+                <form method="get" action="#" onsubmit="search(getElementById('txtSearch').value)">
                     <hr>
                     <input type="text" id="txtSearch" placeholder="Search">
 <!--                    <input type="submit" id="btnSearch" name="search" value="Search">-->
@@ -116,6 +115,9 @@
 				<table id="songTable" border="1" cellspacing="0" cellpadding="4">
 					<thead>
 						<tr>
+							<th class=title colspan="4">Songs</th>
+						</tr>
+						<tr>
 					        <th>Title</th><th>Length</th><th>Release Date</th><th>Record Date</th>
 					    </tr>		
 				    </thead>
@@ -132,6 +134,9 @@
 				<table id="artistTable" border="1" cellspacing="0" cellpadding="4">
 					<thead>
 						<tr>
+							<th class=title colspan="4">Artists</th>
+						</tr>
+						<tr>
 					        <th>First Name</th><th>Last Name</th><th>Band Name</th><th>Bio</th>
 					    </tr>		
 				    </thead>
@@ -147,6 +152,9 @@
 				
 				<table id="albumTable" border="1" cellspacing="0" cellpadding="4">
 					<thead>
+						<tr>
+							<th class=title colspan="6">Albums</th>
+						</tr>
 						<tr>
 					        <th>Title</th><th>Release Date</th><th>Recording Company</th><th>Number of Tracks</th><th>PMRC Rating</th><th>Length</th>
 					    </tr>		
