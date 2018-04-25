@@ -7,6 +7,9 @@
         <!--CSS-->
         <link rel="stylesheet" type="text/css" href="main.css">
         
+        <!--FontAwesome-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+        
         <!--JS-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="http://code.jquery.com/jquery-3.3.1.min.js"integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
@@ -15,56 +18,54 @@
         <script>
         	
 			$(document).ready(function(){
-	            var song = document.createElement('audio');            
-	            song.setAttribute('src', 'music/Everyday.mp3');
-
-	            $("#playbtn").click(function(){
-	                song.play();
-	            });
-	            $("#pausebtn").click(function(){
-	                song.pause();
-	            });
-	            $("#restartbtn").click(function(){
-	                song.currentTime = 0;
-	                song.play();
-	            });
-				
-	            
-	            
-	            
-	            $("#songsbtn").click(function(){            	
+                $("#songsbtn").click(function(){            	
 	                $("#songTable").show();
 	                $("#artistTable").hide();
 	                $("#albumTable").hide();
-	                displayData();
+	                displaySongData();
 	            });
 	            $("#artistsbtn").click(function(){
 	                $("#songTable").hide();
 	                $("#artistTable").show();
 	                $("#albumTable").hide();
-	                displayData();
+	                displayArtistData();
 	            });
 	            $("#albumsbtn").click(function(){
 	                $("#songTable").hide();
 	                $("#artistTable").hide();
 	                $("#albumTable").show();
-	                displayData();
+	                displayAlbumData();
 	            });
 			});
 
-            function displayData(){
-            	$.get("api/get_songs?searchTerm=",function(data){
+			function displaySongData(){
+				$.get("api/get_songs?serchTerm=",function(data){
             		console.log(data);
-            		songSearchResults(data);
-            	})
-            }
-            
-			function songSearchResults(data){
-				console.log(data.songs);	
-				ko.applyBindings(data);
+            		var viewModel = {};
+            		viewModel.songData = data;
+            		ko.applyBindings(viewModel);
+				})
 			}
 
-			function songList(){
+			function displayArtistData(){
+				$.get("api/get_artists?serchTerm=",function(data){
+            		console.log(data);
+            		var viewModel = {};
+            		viewModel.artistData = data;
+            		ko.applyBindings(viewModel);
+				})
+			}
+			
+			function displayAlbumData(){
+				$.get("api/get_albums?serchTerm=",function(data){
+            		console.log(data);
+            		var viewModel = {};
+            		viewModel.albumData = data;
+            		ko.applyBindings(viewModel);
+				})
+			}
+
+			/*function songList(){
 				self = this;
 			}
 
@@ -74,7 +75,7 @@
 
 			function artistList(){
 				self = this;
-			}
+			}*/
         </script>
         
 	</head>
@@ -82,32 +83,30 @@
         <section class="page">
             <nav>
                 <h1>Spotify Knockoff</h1>
-                <form method="get" action="">
+                <form method="get" action="/api/get_artists">
+                    <hr>
                     <input type="text" id="txtSearch" placeholder="Search">
-                    <input type="submit" id="btnSearch" name="search" value="Search">
+<!--                    <input type="submit" id="btnSearch" name="search" value="Search">-->
+                    <i class="fas fa-search"></i>
+                    <hr>
                 </form>
                 <ul>
                     <li><button id="songsbtn">Songs</button></li>
                     <li><button id="artistsbtn">Artists</button></li>
                     <li><button id="albumsbtn">Albums</button></li>
                 </ul>
-                <br><br>
-                <p><button id="playbtn">Play</button>
-                <button id="pausebtn">Pause</button>
-                <button id="restartbtn">Restart</button></p>
             </nav>
 
             <main>
 				<table id="songTable" border="1" cellspacing="0" cellpadding="4">
 					<thead>
 						<tr>
-					        <th>Title</th><th>Artist</th><th>Length</th><th>Release Date</th><th>Record Date</th>
+					        <th>Title</th><th>Length</th><th>Release Date</th><th>Record Date</th>
 					    </tr>		
 				    </thead>
 				    <tbody data-bind="foreach: songData">
 					    <tr>
 					        <td data-bind="text: title"></td>
-					        <td data-bind="text: artist"></td>
 					        <td data-bind="text: length"></td>
 					        <td data-bind="text: release_date"></td>
 					        <td data-bind="text: record_date"></td>
@@ -134,20 +133,27 @@
 				<table id="albumTable" border="1" cellspacing="0" cellpadding="4">
 					<thead>
 						<tr>
-					        <th>Title</th><th>Artist</th><th>Number of Tracks</th><th>Release Date</th><th>Record Date</th>
+					        <th>Title</th><th>Release Date</th><th>Recording Company</th><th>Number of Tracks</th><th>PMRC Rating</th><th>Length</th>
 					    </tr>		
 				    </thead>
 				    <tbody data-bind="foreach: albumData">
 					    <tr>
 					        <td data-bind="text: title"></td>
-					        <td data-bind="text: artist"></td>
-					        <td data-bind="text: number_of_tracks"></td>
 					        <td data-bind="text: release_date"></td>
-					        <td data-bind="text: record_date"></td>
+					        <td data-bind="text: recording_company_name"></td>
+					        <td data-bind="text: number_of_tracks"></td>
+					        <td data-bind="text: PMRC_rating"></td>
+					        <td data-bind="text: length"></td>					        
 					    </tr> 
 				    </tbody>
 				</table>
             </main>
+            <footer>
+                <audio controls>
+					<source src="music/Everyday.mp3" type="audio/mpeg">
+					Your browser does not support the audio element.
+				</audio>
+            </footer>
         </section>
 	</body>
 </html>

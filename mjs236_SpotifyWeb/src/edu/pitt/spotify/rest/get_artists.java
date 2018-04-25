@@ -41,9 +41,9 @@ public class get_artists extends HttpServlet {
 		// Band Name
 		// Song
 		// Album
-		String title = "", artist = "", album = "", songYear = "";
+		String firstName = "", lastName = "", bandName = "", bio = "";
 		String sql = "";
-		if(request.getParameter("title") != null){
+		/*if(request.getParameter("title") != null){
 			title = request.getParameter("title");
 			if(!title.equals("")){
 				sql = "SELECT * FROM song WHERE title LIKE '" + title + "%';";
@@ -70,7 +70,7 @@ public class get_artists extends HttpServlet {
 				sql = "SELECT * FROM song JOIN album_song ON song_id = fk_song_id ";
 				sql += "JOIN album ON fk_album_id = album_id WHERE album.title LIKE '" + album + "%';";
 			}
-		}
+		}*/
 		
 		if(sql.equals("")){
 			sql = "SELECT * FROM artist;";
@@ -84,11 +84,11 @@ public class get_artists extends HttpServlet {
 			ResultSet rs = db.getResultSet(sql);
 			while(rs.next()){
 				JSONObject artist = new JSONObject();
-				artist.put("song_id", rs.getString("song_id"));
-				artist.put("title", rs.getString("title"));
-				artist.put("release_date", rs.getString("release_date"));
-				artist.put("record_date", rs.getString("record_date"));
-				artist.put("length", rs.getInt("length"));
+				artist.put("artist_id", rs.getString("artist_id"));
+				artist.put("first_name", rs.getString("first_name"));
+				artist.put("last_name", rs.getString("last_name"));
+				artist.put("band_name", rs.getString("band_name"));
+				artist.put("bio", rs.getString("bio"));
 				artistList.put(artist);
 			}
 			response.getWriter().write(artistList.toString());

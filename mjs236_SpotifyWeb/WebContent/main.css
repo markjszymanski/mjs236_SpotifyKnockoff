@@ -8,20 +8,34 @@ body {
 
 .page {
     display: flex;
+    color: #a5a5a5;
 }
 
 nav {
-	background-color: rgba(0,0,0,0.5);
+	background: linear-gradient(#252626,#040404);
     padding: 15px;
-    width: 25%;
+    width: 15%;
 }
 
-nav input:hover {
-    
+nav h1 {
+    color: #1db954;
+}
+
+#txtSearch {
+    background-color: transparent;
+    border: none;
+    color: #a5a5a5;
+    font-size: 14pt;
+    width: 90%;
+}
+
+.fas {
+    align-content: right;
 }
 
 nav ul {
 	list-style-type: none;
+    padding-left: 0;
 }
 
 nav li {
@@ -32,7 +46,7 @@ nav li {
 }
 
 nav li:hover{
-    border-right: 3px solid white;
+    color: #1db954;
 }
 
 
@@ -46,20 +60,47 @@ nav a:hover {
 }
 
 nav button {
-    background-color: black;
-    color: gray;
+    background-color: transparent;
+    border: none;
+    color: #a5a5a5;
     font-size: 14pt;
+}
+
+nav button:hover {
+    color: white;
+    cursor: pointer;
 }
 
 main {
     align-items: center;
-    background-color: rgb(0,0,0);
+    background: linear-gradient(#4b4c4c,#080808);;
     color: white;
     display: flex;
     flex-direction: column;
     height: 100vh;
+    overflow: scroll;
     text-align: left;
-    width: 75%;
+    width: 90%;
+}
+
+::-webkit-scrollbar {
+    height: 76px;
+    width: 15px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
 }
 
 table {
@@ -114,5 +155,12 @@ table td {
 */
 
 footer {
+    background-color: #282828;
+    bottom: 0;
     display: block;
+/*    height: 80px;*/
+    padding: 20px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
 }
