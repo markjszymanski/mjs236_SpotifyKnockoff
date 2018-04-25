@@ -87,7 +87,7 @@ public class get_albums extends HttpServlet {
 				album.put("title", rs.getString("title"));
 				album.put("release_date", rs.getString("release_date"));
 				album.put("recording_company_name", rs.getString("recording_company_name"));
-				album.put("number _of_tracks", rs.getInt("number _of_tracks"));
+				album.put("number_of_tracks", rs.getInt("number_of_tracks"));
 				album.put("PMRC_rating", rs.getString("PMRC_rating"));
 				album.put("length", rs.getInt("length"));
 				albumList.put(album);
