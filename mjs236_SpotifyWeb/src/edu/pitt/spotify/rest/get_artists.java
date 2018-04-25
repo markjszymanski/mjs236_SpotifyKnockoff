@@ -44,7 +44,7 @@ public class get_artists extends HttpServlet {
 		String searchTerm = request.getParameter("searchTerm");
 		String sql = "";
 		
-		if (searchTerm == null) {
+		if (searchTerm == null || searchTerm == "") {
 			sql = "SELECT * FROM artist;";
 		}
 		else {
@@ -53,7 +53,7 @@ public class get_artists extends HttpServlet {
 			sql += " OR band_name LIKE '%" + searchTerm + "%';";
 		}
 		
-		System.out.println(sql);
+		//System.out.println(sql);
 		/*if(request.getParameter("title") != null){
 			title = request.getParameter("title");
 			if(!title.equals("")){

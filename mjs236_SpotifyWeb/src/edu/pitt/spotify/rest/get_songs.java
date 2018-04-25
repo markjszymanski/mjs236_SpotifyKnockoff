@@ -44,14 +44,14 @@ public class get_songs extends HttpServlet {
 		String searchTerm = request.getParameter("searchTerm");
 		String sql = "";
 		
-		if (searchTerm == null) {
+		if (searchTerm == null || searchTerm == "") {
 			sql = "SELECT * FROM song;";
 		}
 		else {
 			sql = "SELECT * FROM song WHERE title LIKE '%" + searchTerm + "%';";
 		}
 		
-		System.out.println(sql);
+		//System.out.println(sql);
 		
 /*		if(request.getParameter(searchTerm) != ""){
 			System.out.println(searchTerm);
