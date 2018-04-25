@@ -27,6 +27,7 @@
 	                $("#artistTable").hide();
 	                $("#albumTable").hide();
 	                $("#welcome-message").hide();
+	                document.getElementById("searchForm").reset();
 	                displaySongData("");
 	            });
 	            $("#artistsbtn").click(function(){
@@ -34,6 +35,7 @@
 	                $("#artistTable").show();
 	                $("#albumTable").hide();
                     $("#welcome-message").hide();
+                    document.getElementById("searchForm").reset();
 	                displayArtistData("");
 	            });
 	            $("#albumsbtn").click(function(){
@@ -41,6 +43,7 @@
 	                $("#artistTable").hide();
 	                $("#albumTable").show();
                     $("#welcome-message").hide();
+                    document.getElementById("searchForm").reset();
 	                displayAlbumData("");
 	            });
 			});
@@ -82,7 +85,8 @@
 		        $("#artistTable").show();
 		        $("#albumTable").show();
 				displaySongData(searchTerm);
-				
+				displayArtistData(searchTerm);
+				displayAlbumData(searchTerm);
 			}
 			
         </script>
@@ -92,7 +96,7 @@
         <section class="page">
             <nav>
                 <h1>SpotifyKnockoff</h1>
-                <form method="get" action="#" onsubmit="search(getElementById('txtSearch').value)">
+                <form id="searchForm" method="get" action="#" onsubmit="search(getElementById('txtSearch').value)">
                     <hr>
                     <input type="text" id="txtSearch" placeholder="Search">
 <!--                    <input type="submit" id="btnSearch" name="search" value="Search">-->

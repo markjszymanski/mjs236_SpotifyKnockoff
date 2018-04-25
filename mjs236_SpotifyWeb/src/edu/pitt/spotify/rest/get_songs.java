@@ -40,9 +40,21 @@ public class get_songs extends HttpServlet {
 		// Artist
 		// Album
 		// Year
-		String title = "", artist = "", album = "", songYear = "";
+		String title = "", artist = "", album = "", songYear = "", searchTerm = "";
 		String sql = "";
-		if(request.getParameter("title") != null){
+		
+		/*if(request.getParameter("searchTerm") != ""){
+			searchTerm = request.getParameter("searchTerm");
+			if(!searchTerm.equals("")){
+				sql = "SELECT * FROM song WHERE title LIKE '%" + searchTerm + "%';";
+			}
+		}*/
+		
+		if(sql.equals("")){
+			sql = "SELECT * FROM song;";
+		}
+		
+		/*if(request.getParameter("title") != null){
 			title = request.getParameter("title");
 			if(!title.equals("")){
 				sql = "SELECT * FROM song WHERE title LIKE '%" + title + "%';";
@@ -73,7 +85,7 @@ public class get_songs extends HttpServlet {
 		
 		if(sql.equals("")){
 			sql = "SELECT * FROM song;";
-		}
+		}*/
 		// response.getWriter().write(sql);
 		
 		JSONArray songList = new JSONArray();
